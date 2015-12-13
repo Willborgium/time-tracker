@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TimeTracker.Core.Model
+﻿namespace TimeTracker.Service.Core.Model
 {
     public class WebResponse
     {

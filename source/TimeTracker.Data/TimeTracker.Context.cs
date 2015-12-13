@@ -25,6 +25,7 @@ namespace TimeTracker.Data
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<WorkEvent> WorkEvents { get; set; }
         public virtual DbSet<WorkEventType> WorkEventTypes { get; set; }

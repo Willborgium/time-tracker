@@ -2,12 +2,6 @@
 
 namespace TimeTracker.Core.Model
 {
-    public enum WorkEventType
-    {
-        WorkFromHome,
-        PaidTimeOff
-    }
-
     public class WorkEvent
     {
         public int Id { get; set; }

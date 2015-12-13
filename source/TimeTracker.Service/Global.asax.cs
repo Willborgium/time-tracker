@@ -8,7 +8,8 @@ namespace TimeTracker.Service
     {
         protected void Application_Start()
         {
-            RouteTable.Routes.Add(new ServiceRoute("timetracker", new WebServiceHostFactory(), typeof(TimeTrackerService)));
+            RouteTable.Routes.Add(new ServiceRoute("company", new WebServiceHostFactory(), typeof(CompanyController)));
+            RouteTable.Routes.Add(new ServiceRoute("person", new WebServiceHostFactory(), typeof(PersonController)));
         }
     }
 }

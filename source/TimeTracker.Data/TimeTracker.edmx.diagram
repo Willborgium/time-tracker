@@ -5,11 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="661ace25b7d94feab1258de5de788c61" Name="Diagram1">
-        <EntityTypeShape EntityType="TimeTracker.DatabaseModel.Person" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimeTracker.DatabaseModel.WorkEvent" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimeTracker.DatabaseModel.WorkEventType" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <AssociationConnector Association="TimeTracker.DatabaseModel.FK__WorkEvent__Perso__145C0A3F" ManuallyRouted="false" />
-        <AssociationConnector Association="TimeTracker.DatabaseModel.FK__WorkEvent__Type__15502E78" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TimeTracker.DatabaseModel.Company" Width="1.5" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="TimeTracker.DatabaseModel.Person" Width="1.5" PointX="3" PointY="1.125" />
+        <EntityTypeShape EntityType="TimeTracker.DatabaseModel.WorkEvent" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="TimeTracker.DatabaseModel.WorkEventType" Width="1.5" PointX="3" PointY="5.375" />
+        <AssociationConnector Association="TimeTracker.DatabaseModel.FK__Person__CompanyI__33D4B598" />
+        <AssociationConnector Association="TimeTracker.DatabaseModel.FK__WorkEvent__Perso__34C8D9D1" />
+        <AssociationConnector Association="TimeTracker.DatabaseModel.FK__WorkEvent__Type__35BCFE0A" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

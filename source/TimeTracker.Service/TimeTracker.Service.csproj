@@ -99,11 +99,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompanyController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TimeTrackerService.cs" />
+    <Compile Include="PersonController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -122,6 +123,10 @@
     <ProjectReference Include="..\TimeTracker.Data\TimeTracker.Data.csproj">
       <Project>{348a4e27-0eff-48bb-a0ff-ee257b19dcda}</Project>
       <Name>TimeTracker.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TimeTracker.Service.Core\TimeTracker.Service.Core.csproj">
+      <Project>{299d02a0-746e-41cd-bb0c-cc10b313d882}</Project>
+      <Name>TimeTracker.Service.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

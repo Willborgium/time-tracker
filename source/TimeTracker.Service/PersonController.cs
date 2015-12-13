@@ -7,12 +7,13 @@ using TimeTracker.Core.Model;
 using TimeTracker.Core.Repository;
 using TimeTracker.Core.Service;
 using TimeTracker.Data.Repository;
+using TimeTracker.Service.Core.Model;
 
 namespace TimeTracker.Service
 {
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Required)]
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
-    public class TimeTrackerService : ITimeTrackerService
+    public class PersonController : IPersonController
     {
         public WebResponse<string> Heartbeat(string message)
         {
@@ -34,31 +35,13 @@ namespace TimeTracker.Service
             return output;
         }
 
-        public WebResponse AddPerson(Person person)
+        public WebResponse<Person> GetPerson(int companyId, int id)
         {
-            var output = new WebResponse();
+            var output = new WebResponse<Person>();
 
             try
             {
-                PersonSvc.AddPerson(person);
-            }
-            catch (Exception err)
-            {
-                output.HasError = true;
-
-                output.ErrorDetails = err.Message;
-            }
-
-            return output;
-        }
-
-        public WebResponse<List<Person>> GetPeople()
-        {
-            var output = new WebResponse<List<Person>>();
-
-            try
-            {
-                output.Data = PersonSvc.GetPeople().ToList();
+                output.Data = PersonSvc.GetPerson(companyId, id);
             }
             catch (Exception err)
             {
@@ -72,9 +55,79 @@ namespace TimeTracker.Service
             return output;
         }
 
-        private static IPersonService _personSvc;
+        public WebResponse<List<Person>> GetPeople(int companyId)
+        {
+            var output = new WebResponse<List<Person>>();
 
-        private static IPersonRepository _personRepo;
+            try
+            {
+                output.Data = PersonSvc.GetPeople(companyId).ToList();
+            }
+            catch (Exception err)
+            {
+                output.Data = null;
+
+                output.HasError = true;
+
+                output.ErrorDetails = err.Message;
+            }
+
+            return output;
+        }
+
+        public WebResponse AddPerson(int companyId, Person person)
+        {
+            var output = new WebResponse();
+
+            try
+            {
+                PersonSvc.AddPerson(companyId, person);
+            }
+            catch (Exception err)
+            {
+                output.HasError = true;
+
+                output.ErrorDetails = err.Message;
+            }
+
+            return output;
+        }
+
+        public WebResponse DeletePerson(int companyId, int id)
+        {
+            var output = new WebResponse();
+
+            try
+            {
+                PersonSvc.DeletePerson(companyId, id);
+            }
+            catch (Exception err)
+            {
+                output.HasError = true;
+
+                output.ErrorDetails = err.Message;
+            }
+
+            return output;
+        }
+
+        public WebResponse UpdatePerson(int companyId, Person person)
+        {
+            var output = new WebResponse();
+
+            try
+            {
+                PersonSvc.UpdatePerson(companyId, person);
+            }
+            catch (Exception err)
+            {
+                output.HasError = true;
+
+                output.ErrorDetails = err.Message;
+            }
+
+            return output;
+        }
 
         private IPersonRepository PersonRepo
         {
@@ -101,5 +154,9 @@ namespace TimeTracker.Service
                 return _personSvc;
             }
         }
+
+        private static IPersonRepository _personRepo;
+
+        private static IPersonService _personSvc;
     }
 }

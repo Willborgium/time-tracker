@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[Person]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
+	[CompanyId] INT FOREIGN KEY REFERENCES [Company]([Id]),
+	[FirstName] NVARCHAR(MAX),
+	[LastName] NVARCHAR(MAX)
+)

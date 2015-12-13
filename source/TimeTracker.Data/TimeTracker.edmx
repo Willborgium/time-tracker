@@ -4,12 +4,20 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TimeTracker.DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TimeTracker.DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Person">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" />
           <Property Name="FirstName" Type="nvarchar(max)" />
           <Property Name="LastName" Type="nvarchar(max)" />
         </EntityType>
@@ -17,7 +25,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PersonId" Type="int" Nullable="false" />
           <Property Name="Type" Type="int" Nullable="false" />
           <Property Name="Date" Type="date" />
@@ -28,10 +36,22 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
         </EntityType>
-        <Association Name="FK__WorkEvent__Perso__145C0A3F">
+        <Association Name="FK__Person__CompanyI__33D4B598">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WorkEvent__Perso__34C8D9D1">
           <End Role="Person" Type="Self.Person" Multiplicity="1" />
           <End Role="WorkEvent" Type="Self.WorkEvent" Multiplicity="*" />
           <ReferentialConstraint>
@@ -43,7 +63,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__WorkEvent__Type__15502E78">
+        <Association Name="FK__WorkEvent__Type__35BCFE0A">
           <End Role="WorkEventType" Type="Self.WorkEventType" Multiplicity="1" />
           <End Role="WorkEvent" Type="Self.WorkEvent" Multiplicity="*" />
           <ReferentialConstraint>
@@ -56,56 +76,100 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="TimeTrackerDatabaseModelStoreContainer">
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkEvent" EntityType="Self.WorkEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkEventType" EntityType="Self.WorkEventType" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__WorkEvent__Perso__145C0A3F" Association="Self.FK__WorkEvent__Perso__145C0A3F">
+          <AssociationSet Name="FK__Person__CompanyI__33D4B598" Association="Self.FK__Person__CompanyI__33D4B598">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WorkEvent__Perso__34C8D9D1" Association="Self.FK__WorkEvent__Perso__34C8D9D1">
             <End Role="Person" EntitySet="Person" />
             <End Role="WorkEvent" EntitySet="WorkEvent" />
           </AssociationSet>
-          <AssociationSet Name="FK__WorkEvent__Type__15502E78" Association="Self.FK__WorkEvent__Type__15502E78">
+          <AssociationSet Name="FK__WorkEvent__Type__35BCFE0A" Association="Self.FK__WorkEvent__Type__35BCFE0A">
             <End Role="WorkEventType" EntitySet="WorkEventType" />
             <End Role="WorkEvent" EntitySet="WorkEvent" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TimeTracker.DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TimeTrackerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Companies" EntityType="TimeTracker.DatabaseModel.Company" />
+          <EntitySet Name="People" EntityType="TimeTracker.DatabaseModel.Person" />
+          <EntitySet Name="WorkEvents" EntityType="TimeTracker.DatabaseModel.WorkEvent" />
+          <EntitySet Name="WorkEventTypes" EntityType="TimeTracker.DatabaseModel.WorkEventType" />
+          <AssociationSet Name="FK__Person__CompanyI__33D4B598" Association="TimeTracker.DatabaseModel.FK__Person__CompanyI__33D4B598">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WorkEvent__Perso__34C8D9D1" Association="TimeTracker.DatabaseModel.FK__WorkEvent__Perso__34C8D9D1">
+            <End Role="Person" EntitySet="People" />
+            <End Role="WorkEvent" EntitySet="WorkEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WorkEvent__Type__35BCFE0A" Association="TimeTracker.DatabaseModel.FK__WorkEvent__Type__35BCFE0A">
+            <End Role="WorkEventType" EntitySet="WorkEventTypes" />
+            <End Role="WorkEvent" EntitySet="WorkEvents" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="People" Relationship="TimeTracker.DatabaseModel.FK__Person__CompanyI__33D4B598" FromRole="Company" ToRole="Person" />
+        </EntityType>
         <EntityType Name="Person">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" />
           <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="WorkEvents" Relationship="Self.FK__WorkEvent__Perso__145C0A3F" FromRole="Person" ToRole="WorkEvent" />
+          <NavigationProperty Name="Company" Relationship="TimeTracker.DatabaseModel.FK__Person__CompanyI__33D4B598" FromRole="Person" ToRole="Company" />
+          <NavigationProperty Name="WorkEvents" Relationship="TimeTracker.DatabaseModel.FK__WorkEvent__Perso__34C8D9D1" FromRole="Person" ToRole="WorkEvent" />
         </EntityType>
         <EntityType Name="WorkEvent">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PersonId" Type="Int32" Nullable="false" />
           <Property Name="Type" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Precision="0" />
           <Property Name="Duration" Type="Decimal" Precision="4" Scale="2" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Person" Relationship="Self.FK__WorkEvent__Perso__145C0A3F" FromRole="WorkEvent" ToRole="Person" />
-          <NavigationProperty Name="WorkEventType" Relationship="Self.FK__WorkEvent__Type__15502E78" FromRole="WorkEvent" ToRole="WorkEventType" />
+          <NavigationProperty Name="Person" Relationship="TimeTracker.DatabaseModel.FK__WorkEvent__Perso__34C8D9D1" FromRole="WorkEvent" ToRole="Person" />
+          <NavigationProperty Name="WorkEventType" Relationship="TimeTracker.DatabaseModel.FK__WorkEvent__Type__35BCFE0A" FromRole="WorkEvent" ToRole="WorkEventType" />
         </EntityType>
         <EntityType Name="WorkEventType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="WorkEvents" Relationship="Self.FK__WorkEvent__Type__15502E78" FromRole="WorkEventType" ToRole="WorkEvent" />
+          <NavigationProperty Name="WorkEvents" Relationship="TimeTracker.DatabaseModel.FK__WorkEvent__Type__35BCFE0A" FromRole="WorkEventType" ToRole="WorkEvent" />
         </EntityType>
-        <Association Name="FK__WorkEvent__Perso__145C0A3F">
-          <End Role="Person" Type="Self.Person" Multiplicity="1" />
-          <End Role="WorkEvent" Type="Self.WorkEvent" Multiplicity="*" />
+        <Association Name="FK__Person__CompanyI__33D4B598">
+          <End Type="TimeTracker.DatabaseModel.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="TimeTracker.DatabaseModel.Person" Role="Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WorkEvent__Perso__34C8D9D1">
+          <End Type="TimeTracker.DatabaseModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="TimeTracker.DatabaseModel.WorkEvent" Role="WorkEvent" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Person">
               <PropertyRef Name="Id" />
@@ -115,9 +179,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__WorkEvent__Type__15502E78">
-          <End Role="WorkEventType" Type="Self.WorkEventType" Multiplicity="1" />
-          <End Role="WorkEvent" Type="Self.WorkEvent" Multiplicity="*" />
+        <Association Name="FK__WorkEvent__Type__35BCFE0A">
+          <End Type="TimeTracker.DatabaseModel.WorkEventType" Role="WorkEventType" Multiplicity="1" />
+          <End Type="TimeTracker.DatabaseModel.WorkEvent" Role="WorkEvent" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="WorkEventType">
               <PropertyRef Name="Id" />
@@ -127,51 +191,47 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="TimeTrackerEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="People" EntityType="Self.Person" />
-          <EntitySet Name="WorkEvents" EntityType="Self.WorkEvent" />
-          <EntitySet Name="WorkEventTypes" EntityType="Self.WorkEventType" />
-          <AssociationSet Name="FK__WorkEvent__Perso__145C0A3F" Association="Self.FK__WorkEvent__Perso__145C0A3F">
-            <End Role="Person" EntitySet="People" />
-            <End Role="WorkEvent" EntitySet="WorkEvents" />
-          </AssociationSet>
-          <AssociationSet Name="FK__WorkEvent__Type__15502E78" Association="Self.FK__WorkEvent__Type__15502E78">
-            <End Role="WorkEventType" EntitySet="WorkEventTypes" />
-            <End Role="WorkEvent" EntitySet="WorkEvents" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="TimeTrackerDatabaseModelStoreContainer" CdmEntityContainer="TimeTrackerEntities">
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="TimeTracker.DatabaseModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="People">
             <EntityTypeMapping TypeName="TimeTracker.DatabaseModel.Person">
               <MappingFragment StoreEntitySet="Person">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="WorkEvents">
             <EntityTypeMapping TypeName="TimeTracker.DatabaseModel.WorkEvent">
               <MappingFragment StoreEntitySet="WorkEvent">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="WorkEventTypes">
             <EntityTypeMapping TypeName="TimeTracker.DatabaseModel.WorkEventType">
               <MappingFragment StoreEntitySet="WorkEventType">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

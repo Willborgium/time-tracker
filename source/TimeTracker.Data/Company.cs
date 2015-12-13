@@ -12,21 +12,18 @@ namespace TimeTracker.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Person
+    public partial class Company
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Person()
+        public Company()
         {
-            this.WorkEvents = new HashSet<WorkEvent>();
+            this.People = new HashSet<Person>();
         }
     
         public int Id { get; set; }
-        public Nullable<int> CompanyId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Name { get; set; }
     
-        public virtual Company Company { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<WorkEvent> WorkEvents { get; set; }
+        public virtual ICollection<Person> People { get; set; }
     }
 }

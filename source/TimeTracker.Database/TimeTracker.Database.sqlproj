@@ -57,13 +57,19 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="Tables" />
+    <Folder Include="Data" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Person.sql" />
-    <Build Include="WorkEvent.sql" />
-    <Build Include="WorkEventType.sql" />
+    <Build Include="Tables\Company.sql" />
+    <Build Include="Tables\Person.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TimeTracker.Database.local.publish.xml" />
+    <None Include="Data\WorkEventTypes_Data.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\WorkEvent.sql" />
+    <Build Include="Tables\WorkEventType.sql" />
   </ItemGroup>
 </Project>
