@@ -17,8 +17,8 @@ namespace TimeTracker.Data
         public int Id { get; set; }
         public int PersonId { get; set; }
         public int Type { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
-        public Nullable<decimal> Duration { get; set; }
+        public System.DateTime Date { get; set; }
+        public decimal Duration { get; set; }
         public string Description { get; set; }
     
         public virtual Person Person { get; set; }

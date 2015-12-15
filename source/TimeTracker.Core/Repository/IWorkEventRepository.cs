@@ -5,14 +5,14 @@ namespace TimeTracker.Core.Repository
 {
     public interface IWorkEventRepository
     {
-        WorkEvent GetWorkEvent(int personId, int id);
+        WorkEvent GetWorkEvent(int companyId, int personId, int id);
 
-        IEnumerable<WorkEvent> GetWorkEvents(int personId);
+        IEnumerable<WorkEvent> GetWorkEvents(int companyId, int personId);
 
-        void AddWorkEvent(int personId, WorkEvent workEvent);
+        void AddWorkEvent(int companyId, int personId, WorkEvent workEvent);
 
-        void DeleteWorkEvent(int personId, int id);
+        void DeleteWorkEvent(int companyId, int personId, int id);
 
-        void UpdateWorkEvent(int personId, WorkEvent workEvent);
+        void UpdateWorkEvent(int companyId, int personId, WorkEvent workEvent);
     }
 }

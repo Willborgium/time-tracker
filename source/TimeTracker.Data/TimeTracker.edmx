@@ -28,8 +28,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PersonId" Type="int" Nullable="false" />
           <Property Name="Type" Type="int" Nullable="false" />
-          <Property Name="Date" Type="date" />
-          <Property Name="Duration" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Duration" Type="decimal" Precision="4" Scale="2" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="WorkEventType">
@@ -141,8 +141,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PersonId" Type="Int32" Nullable="false" />
           <Property Name="Type" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Precision="0" />
-          <Property Name="Duration" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Duration" Type="Decimal" Nullable="false" Precision="4" Scale="2" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Person" Relationship="TimeTracker.DatabaseModel.FK__WorkEvent__Perso__34C8D9D1" FromRole="WorkEvent" ToRole="Person" />
           <NavigationProperty Name="WorkEventType" Relationship="TimeTracker.DatabaseModel.FK__WorkEvent__Type__35BCFE0A" FromRole="WorkEvent" ToRole="WorkEventType" />
@@ -191,7 +191,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>

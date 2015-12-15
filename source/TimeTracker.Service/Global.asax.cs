@@ -10,6 +10,7 @@ namespace TimeTracker.Service
         {
             RouteTable.Routes.Add(new ServiceRoute("company", new WebServiceHostFactory(), typeof(CompanyController)));
             RouteTable.Routes.Add(new ServiceRoute("person", new WebServiceHostFactory(), typeof(PersonController)));
+            RouteTable.Routes.Add(new ServiceRoute("workevent", new WebServiceHostFactory(), typeof(WorkEventController)));
         }
     }
 }

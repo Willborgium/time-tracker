@@ -12,19 +12,19 @@ namespace TimeTracker.Core.Service
         [WebGet(UriTemplate = "beep/{message}", ResponseFormat = WebMessageFormat.Json)]
         WebResponse<string> Heartbeat(string message);
 
-        [WebGet(ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        WebResponse<Person> GetPerson(int companyId, int id);
+        [WebGet(UriTemplate = "{companyId}/{id}", ResponseFormat = WebMessageFormat.Json)]
+        WebResponse<Person> GetPerson(string companyId, string id);
 
-        [WebGet(ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        WebResponse<List<Person>> GetPeople(int companyId);
+        [WebGet(UriTemplate = "{companyId}", ResponseFormat = WebMessageFormat.Json)]
+        WebResponse<List<Person>> GetPeople(string companyId);
 
-        [WebInvoke(ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest, Method = "PUT")]
-        WebResponse AddPerson(int companyId, Person person);
+        [WebInvoke(UriTemplate = "{companyId}", ResponseFormat = WebMessageFormat.Json, Method = "PUT")]
+        WebResponse AddPerson(string companyId, Person person);
 
-        [WebInvoke(ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest, Method = "DELETE")]
-        WebResponse DeletePerson(int companyId, int id);
+        [WebInvoke(UriTemplate = "{companyId}/{id}", ResponseFormat = WebMessageFormat.Json, Method = "DELETE")]
+        WebResponse DeletePerson(string companyId, string id);
 
-        [WebInvoke(ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest, Method = "PATCH")]
-        WebResponse UpdatePerson(int companyId, Person person);
+        [WebInvoke(UriTemplate = "{companyId}", ResponseFormat = WebMessageFormat.Json, Method = "PATCH")]
+        WebResponse UpdatePerson(string companyId, Person person);
     }
 }

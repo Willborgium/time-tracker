@@ -14,29 +14,29 @@ namespace TimeTracker.Core.Service
             }
         }
 
-        public WorkEvent GetWorkEvent(int personId, int id)
+        public WorkEvent GetWorkEvent(int companyId, int personId, int id)
         {
-            return _repository.GetWorkEvent(personId, id);
+            return _repository.GetWorkEvent(companyId, personId, id);
         }
 
-        public IEnumerable<WorkEvent> GetWorkEvents(int personId)
+        public IEnumerable<WorkEvent> GetWorkEvents(int companyId, int personId)
         {
-            return _repository.GetWorkEvents(personId);
+            return _repository.GetWorkEvents(companyId, personId);
         }
 
-        public void AddWorkEvent(int personId, WorkEvent workEvent)
+        public void AddWorkEvent(int companyId, int personId, WorkEvent workEvent)
         {
-            _repository.AddWorkEvent(personId, workEvent);
+            _repository.AddWorkEvent(companyId, personId, workEvent);
         }
 
-        public void DeleteWorkEvent(int personId, int id)
+        public void DeleteWorkEvent(int companyId, int personId, int id)
         {
-            _repository.DeleteWorkEvent(personId, id);
+            _repository.DeleteWorkEvent(companyId, personId, id);
         }
 
-        public void UpdateWorkEvent(int personId, WorkEvent workEvent)
+        public void UpdateWorkEvent(int companyId, int personId, WorkEvent workEvent)
         {
-            _repository.UpdateWorkEvent(personId, workEvent);
+            _repository.UpdateWorkEvent(companyId, personId, workEvent);
         }
 
         private static IWorkEventRepository _repository;

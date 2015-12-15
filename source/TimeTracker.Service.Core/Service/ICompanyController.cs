@@ -18,13 +18,13 @@ namespace TimeTracker.Service.Core.Service
         [WebGet(UriTemplate = "", ResponseFormat = WebMessageFormat.Json)]
         WebResponse<List<Company>> GetCompanies();
 
-        [WebInvoke(UriTemplate = "", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest, Method = "PUT")]
+        [WebInvoke(UriTemplate = "", ResponseFormat = WebMessageFormat.Json, Method = "PUT")]
         WebResponse AddCompany(Company company);
 
         [WebInvoke(UriTemplate = "{id}", ResponseFormat = WebMessageFormat.Json, Method = "DELETE")]
         WebResponse DeleteCompany(string id);
 
-        [WebInvoke(UriTemplate = "", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest, Method = "PATCH")]
+        [WebInvoke(UriTemplate = "", ResponseFormat = WebMessageFormat.Json, Method = "PATCH")]
         WebResponse UpdateCompany(Company company);
     }
 }

@@ -8,12 +8,13 @@ using TimeTracker.Core.Repository;
 using TimeTracker.Core.Service;
 using TimeTracker.Data.Repository;
 using TimeTracker.Service.Core.Model;
+using TimeTracker.Service.Core.Service;
 
 namespace TimeTracker.Service
 {
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Required)]
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
-    public class PersonController : IPersonController
+    public class WorkEventController : IWorkEventController
     {
         public WebResponse<string> Heartbeat(string message)
         {
@@ -23,26 +24,6 @@ namespace TimeTracker.Service
             {
                 output.Data = $"Okay! ({message})";
             }
-            catch(Exception err)
-            {
-                output.Data = null;
-
-                output.HasError = true;
-
-                output.ErrorDetails = err.Message;
-            }
-
-            return output;
-        }
-
-        public WebResponse<Person> GetPerson(string companyId, string id)
-        {
-            var output = new WebResponse<Person>();
-
-            try
-            {
-                output.Data = PersonSvc.GetPerson(int.Parse(companyId), int.Parse(id));
-            }
             catch (Exception err)
             {
                 output.Data = null;
@@ -55,13 +36,13 @@ namespace TimeTracker.Service
             return output;
         }
 
-        public WebResponse<List<Person>> GetPeople(string companyId)
+        public WebResponse<WorkEvent> GetWorkEvent(string companyId, string personId, string id)
         {
-            var output = new WebResponse<List<Person>>();
+            var output = new WebResponse<WorkEvent>();
 
             try
             {
-                output.Data = PersonSvc.GetPeople(int.Parse(companyId)).ToList();
+                output.Data = WorkEventSvc.GetWorkEvent(int.Parse(companyId), int.Parse(personId), int.Parse(id));
             }
             catch (Exception err)
             {
@@ -75,13 +56,33 @@ namespace TimeTracker.Service
             return output;
         }
 
-        public WebResponse AddPerson(string companyId, Person person)
+        public WebResponse<List<WorkEvent>> GetWorkEvents(string companyId, string personId)
+        {
+            var output = new WebResponse<List<WorkEvent>>();
+
+            try
+            {
+                output.Data = WorkEventSvc.GetWorkEvents(int.Parse(companyId), int.Parse(personId)).ToList();
+            }
+            catch (Exception err)
+            {
+                output.Data = null;
+
+                output.HasError = true;
+
+                output.ErrorDetails = err.Message;
+            }
+
+            return output;
+        }
+
+        public WebResponse AddWorkEvent(string companyId, string personId, WorkEvent person)
         {
             var output = new WebResponse();
 
             try
             {
-                PersonSvc.AddPerson(int.Parse(companyId), person);
+                WorkEventSvc.AddWorkEvent(int.Parse(companyId), int.Parse(personId), person);
             }
             catch (Exception err)
             {
@@ -93,13 +94,13 @@ namespace TimeTracker.Service
             return output;
         }
 
-        public WebResponse DeletePerson(string companyId, string id)
+        public WebResponse DeleteWorkEvent(string companyId, string personId, string id)
         {
             var output = new WebResponse();
 
             try
             {
-                PersonSvc.DeletePerson(int.Parse(companyId), int.Parse(id));
+                WorkEventSvc.DeleteWorkEvent(int.Parse(companyId), int.Parse(personId), int.Parse(id));
             }
             catch (Exception err)
             {
@@ -111,13 +112,13 @@ namespace TimeTracker.Service
             return output;
         }
 
-        public WebResponse UpdatePerson(string companyId, Person person)
+        public WebResponse UpdateWorkEvent(string companyId, string personId, WorkEvent person)
         {
             var output = new WebResponse();
 
             try
             {
-                PersonSvc.UpdatePerson(int.Parse(companyId), person);
+                WorkEventSvc.UpdateWorkEvent(int.Parse(companyId), int.Parse(personId), person);
             }
             catch (Exception err)
             {
@@ -129,34 +130,34 @@ namespace TimeTracker.Service
             return output;
         }
 
-        private IPersonRepository PersonRepo
+        private IWorkEventRepository WorkEventRepo
         {
             get
             {
-                if(_personRepo == null)
+                if (_workEventRepo == null)
                 {
-                    _personRepo = new EntityPersonRepository();
+                    _workEventRepo = new EntityWorkEventRepository();
                 }
 
-                return _personRepo;
+                return _workEventRepo;
             }
         }
 
-        private IPersonService PersonSvc
+        private IWorkEventService WorkEventSvc
         {
             get
             {
-                if(_personSvc == null)
+                if (_workEventService == null)
                 {
-                    _personSvc = new PersonService(PersonRepo);
+                    _workEventService = new WorkEventService(WorkEventRepo);
                 }
 
-                return _personSvc;
+                return _workEventService;
             }
         }
 
-        private static IPersonRepository _personRepo;
+        private static IWorkEventRepository _workEventRepo;
 
-        private static IPersonService _personSvc;
+        private static IWorkEventService _workEventService;
     }
 }

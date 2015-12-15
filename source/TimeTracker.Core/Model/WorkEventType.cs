@@ -2,7 +2,7 @@
 {
     public enum WorkEventType
     {
-        WorkFromHome,
+        WorkFromHome = 1,
         PaidTimeOff
     }
 }
