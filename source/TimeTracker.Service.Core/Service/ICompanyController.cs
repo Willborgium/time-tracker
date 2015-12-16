@@ -21,6 +21,12 @@ namespace TimeTracker.Service.Core.Service
         [WebInvoke(UriTemplate = "", ResponseFormat = WebMessageFormat.Json, Method = "PUT")]
         WebResponse AddCompany(Company company);
 
+        [WebInvoke(UriTemplate = "", ResponseFormat = WebMessageFormat.Json, Method = "OPTIONS")]
+        void PreflightValidation();
+
+        [WebInvoke(UriTemplate = "{id}", ResponseFormat = WebMessageFormat.Json, Method = "OPTIONS")]
+        void PreflightValidation2(string id);
+
         [WebInvoke(UriTemplate = "{id}", ResponseFormat = WebMessageFormat.Json, Method = "DELETE")]
         WebResponse DeleteCompany(string id);
 

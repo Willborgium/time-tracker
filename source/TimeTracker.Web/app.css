@@ -6,6 +6,19 @@ span {
     font-style: italic;
 }
 
-div{
+.companyId {
     display: inline-block;
+    width: 10%;
+    max-width: 50px;
+}
+
+.companyName {
+    display: inline-block;
+    width: 80%;
+}
+
+.companyDelete {
+    width: 10%;
+    max-width: 150px;
+    min-width: 50px;
 }

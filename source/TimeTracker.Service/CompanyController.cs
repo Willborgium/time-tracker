@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
+using System.Web;
 using TimeTracker.Core.Model;
 using TimeTracker.Core.Repository;
 using TimeTracker.Core.Service;
@@ -76,6 +78,11 @@ namespace TimeTracker.Service
             return output;
         }
 
+        public void PreflightValidation()
+        {
+            HttpContext.Current.Response.StatusCode = 200;
+        }
+
         public WebResponse AddCompany(Company company)
         {
             var output = new WebResponse();
@@ -92,6 +99,11 @@ namespace TimeTracker.Service
             }
 
             return output;
+        }
+
+        public void PreflightValidation2(string id)
+        {
+            HttpContext.Current.Response.StatusCode = 200;
         }
 
         public WebResponse DeleteCompany(string id)
